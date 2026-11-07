@@ -1,0 +1,11 @@
+{% extends "games/base.html" %}
+
+{% block title %}Page not found | Mini Game Arcade{% endblock %}
+
+{% block content %}
+<section class="page">
+  <h1>Page not found</h1>
+  <p>Sorry, we couldn't find that page. It may have moved, or the address may be mistyped.</p>
+  <p><a href="{% url 'games:home' %}">Back to all games</a></p>
+</section>
+{% endblock %}
