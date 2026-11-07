@@ -29,7 +29,7 @@
       <a href="{% url 'games:privacy' %}">Privacy Policy</a>
       <a href="{% url 'games:terms' %}">Terms of Use</a>
     </nav>
-    <p>&copy; Mini Game Arcade</p>
+    <p>&copy; {% now "Y" %} Mini Game Arcade</p>
   </footer>
 
   {% block scripts %}{% endblock %}
