@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.1/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -20,10 +21,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-a^o7n*+s7@-z5j)v2r85ohv8x=_7w6i_ld6yzv#9c*kb(-l%8y'
+SECRET_KEY = os.environ.get("SECRET_KEY", "dev-only-insecure-key")
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get("DEBUG", "True") == "True"
+
+if not DEBUG and SECRET_KEY == "dev-only-insecure-key":
+    raise RuntimeError("Set the SECRET_KEY environment variable when DEBUG is False.")
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '.vercel.app']
 
