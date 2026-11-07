@@ -3,10 +3,6 @@
     if (!container) return;
 
     const canvas = document.createElement("canvas");
-    canvas.width = 800;
-    canvas.height = 500;
-    canvas.style.width = "100%";
-    canvas.style.maxWidth = "800px";
     canvas.style.touchAction = "none"; // stops the page scrolling while swiping
     canvas.style.background = "linear-gradient(#1b2a49, #0d1424)";
     canvas.style.borderRadius = "12px";
@@ -15,8 +11,34 @@
     container.appendChild(canvas);
     const ctx = canvas.getContext("2d");
 
-    const W = canvas.width;
-    const H = canvas.height;
+    let W = 800;
+    let H = 500;
+    let S = 1; // size scale for fruit, hitboxes and text
+
+    function fitCanvas() {
+        const cs = getComputedStyle(container);
+        const padX = parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight);
+        const avail = Math.floor(container.clientWidth - padX);
+        W = Math.max(280, Math.min(800, avail));
+        H = W < 600 ?
+            Math.round(Math.max(400, Math.min(W * 1.5, window.innerHeight * 0.7))) :
+            Math.round(W * 0.625);
+        S = Math.max(0.75, Math.min(1, W / 700));
+        canvas.width = W;
+        canvas.height = H;
+        canvas.style.width = W + "px";
+        canvas.style.height = H + "px";
+    }
+    fitCanvas();
+
+    // refit on rotate or window resize (ignore the phone address bar changing height)
+    let lastWidth = window.innerWidth;
+    window.addEventListener("resize", function() {
+        if (window.innerWidth !== lastWidth) {
+            lastWidth = window.innerWidth;
+            fitCanvas();
+        }
+    });
     const GRAVITY = 0.22;
     const FRUITS = ["🍎", "🍊", "🍉", "🍌", "🍓", "🍍", "🍇"];
 
@@ -25,7 +47,7 @@
     let pieces = [];
     let trail = [];
     let score = 0;
-    let lives = 3;
+    let lives = 20;
     let best = Number(localStorage.getItem("fruitSlicerBest") || 0);
     let spawnTimer = 0;
     let slicing = false;
@@ -36,20 +58,21 @@
         pieces = [];
         trail = [];
         score = 0;
-        lives = 3;
+        lives = 20;
         spawnTimer = 0;
         state = "playing";
     }
 
     function spawn() {
         const isBomb = Math.random() < 0.15;
-        const x = 80 + Math.random() * (W - 160);
+        const m = 50 * S;
+        const x = m + Math.random() * (W - 2 * m);
         fruits.push({
             x: x,
             y: H + 30,
             vx: (W / 2 - x) / 140 + (Math.random() - 0.5) * 1.5,
             vy: -(9 + Math.random() * 3.5),
-            r: 30,
+            r: 30 * S,
             bomb: isBomb,
             emoji: isBomb ? "💣" : FRUITS[Math.floor(Math.random() * FRUITS.length)],
             angle: 0,
@@ -181,7 +204,7 @@
 
     function centerText(text, y, size, color) {
         ctx.fillStyle = color || "#fff";
-        ctx.font = "bold " + size + "px sans-serif";
+        ctx.font = "bold " + Math.round(size * S) + "px sans-serif";
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
         ctx.fillText(text, W / 2, y);
@@ -190,8 +213,8 @@
     function draw() {
         ctx.clearRect(0, 0, W, H);
 
-        for (const f of fruits) drawEmoji(f.emoji, f.x, f.y, 60, f.angle);
-        for (const p of pieces) drawEmoji(p.emoji, p.x, p.y, 40, 0, p.life / 40);
+        for (const f of fruits) drawEmoji(f.emoji, f.x, f.y, 60 * S, f.angle);
+        for (const p of pieces) drawEmoji(p.emoji, p.x, p.y, 40 * S, 0, p.life / 40);
 
         // blade trail
         if (trail.length > 1) {
@@ -212,7 +235,7 @@
         ctx.fillText("Score: " + score, 16, 14);
         ctx.textAlign = "right";
         ctx.fillText("Best: " + best, W - 16, 14);
-        ctx.fillText("❤️".repeat(Math.max(lives, 0)), W - 16, 44);
+        ctx.fillText("❤️ × " + Math.max(lives, 0), W - 16, 44);
 
         if (state === "ready") {
             ctx.fillStyle = "rgba(0,0,0,0.55)";
