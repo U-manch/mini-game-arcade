@@ -1,0 +1,10 @@
+{% extends "games/base.html" %}
+
+{% block title %}About | {{ site_name }}{% endblock %}
+
+{% block content %}
+<h1>About {{ site_name }}</h1>
+<p>{{ site_name }} is a small collection of free browser games that you can play instantly on a phone, tablet or computer. There is nothing to download and no account to create.</p>
+<p>Every game here is built from scratch and tested before it is added, so each one should load quickly and work with a mouse or a touchscreen. We add new games over time.</p>
+<p>Have a suggestion or found a bug? Visit the <a href="{% url 'games:contact' %}">Contact page</a>.</p>
+{% endblock %}

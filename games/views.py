@@ -23,21 +23,31 @@ def play(request, slug):
     return render(request, "games/play.html", {"game": game})
 
 
-def _page(request, title):
-    return render(request, "games/page.html", {"title": title})
+SITE_NAME = "Mini Game Arcade"
+CONTACT_EMAIL = "usmanazhar2626@gmail.com"  
+LAST_UPDATED = "November 7, 2026"
+
+
+def _page(request, title, template):
+    return render(request, template, {
+        "title": title,
+        "site_name": SITE_NAME,
+        "contact_email": CONTACT_EMAIL,
+        "updated": LAST_UPDATED,
+    })
 
 
 def about(request):
-    return _page(request, "About")
+    return _page(request, "About", "games/pages/about.html")
 
 
 def contact(request):
-    return _page(request, "Contact")
+    return _page(request, "Contact", "games/pages/contact.html")
 
 
 def privacy(request):
-    return _page(request, "Privacy Policy")
+    return _page(request, "Privacy Policy", "games/pages/privacy.html")
 
 
 def terms(request):
-    return _page(request, "Terms of Use")
+    return _page(request, "Terms of Use", "games/pages/terms.html")

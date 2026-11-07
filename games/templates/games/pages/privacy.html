@@ -1,0 +1,35 @@
+{% extends "games/base.html" %}
+
+{% block title %}Privacy Policy | {{ site_name }}{% endblock %}
+
+{% block content %}
+<h1>Privacy Policy</h1>
+<p><em>Last updated: {{ updated }}</em></p>
+
+<p>This policy explains what information {{ site_name }} collects when you visit and play games on this site.</p>
+
+<h2>Information we collect</h2>
+<p>We do not ask you to create an account, and we do not ask for your name, email address or any other personal details in order to play.</p>
+
+<h2>Data stored in your browser</h2>
+<p>Some games save a small amount of data in your browser's local storage, such as your best score. This data stays on your device. We do not receive it, and you can remove it at any time by clearing your browser's site data.</p>
+
+<h2>Log data</h2>
+<p>Like most websites, our hosting provider may automatically record technical information when a page is requested, such as your IP address, browser type, device type and the pages visited. This is used for security and to keep the site running reliably.</p>
+
+<h2>Cookies and advertising</h2>
+<p>We may show advertisements on this site using Google AdSense. Third-party vendors, including Google, use cookies to serve ads based on a user's previous visits to this and other websites. Google's use of advertising cookies enables it and its partners to serve ads to you based on your visit to this site and other sites on the internet.</p>
+<p>You can opt out of personalised advertising by visiting <a href="https://adssettings.google.com" rel="noopener" target="_blank">Google Ads Settings</a>. You can also manage or block cookies in your browser settings, although parts of the site may not work as expected without them.</p>
+
+<h2>Third-party links</h2>
+<p>This site may link to other websites. We are not responsible for the privacy practices or content of those sites.</p>
+
+<h2>Children</h2>
+<p>This site does not knowingly collect personal information from children. If you believe a child has provided personal information, please contact us and we will remove it.</p>
+
+<h2>Changes to this policy</h2>
+<p>We may update this policy from time to time. The date at the top shows when it was last changed.</p>
+
+<h2>Contact</h2>
+<p>If you have questions about this policy, email <a href="mailto:{{ contact_email }}">{{ contact_email }}</a>.</p>
+{% endblock %}
