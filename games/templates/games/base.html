@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Mini Game Arcade{% endblock %}</title>
+  <meta name="description" content="{% block description %}Free browser mini-games you can play on desktop and mobile.{% endblock %}">
+  <link rel="stylesheet" href="{% static 'games/css/style.css' %}">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <a class="logo" href="{% url 'games:home' %}">Mini Game Arcade</a>
+    <nav aria-label="Main navigation">
+      <a href="{% url 'games:home' %}">Games</a>
+      <a href="{% url 'games:about' %}">About</a>
+      <a href="{% url 'games:contact' %}">Contact</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <nav aria-label="Footer navigation">
+      <a href="{% url 'games:privacy' %}">Privacy Policy</a>
+      <a href="{% url 'games:terms' %}">Terms of Use</a>
+    </nav>
+    <p>&copy; Mini Game Arcade</p>
+  </footer>
+
+  {% block scripts %}{% endblock %}
+</body>
+</html>

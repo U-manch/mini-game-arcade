@@ -1,0 +1,23 @@
+{% extends "games/base.html" %}
+{% load static %}
+
+{% block content %}
+<section class="hero">
+  <h1>Quick games, right in your browser</h1>
+  <p>Mini Game Arcade is a small collection of free games that run on your phone, tablet, or computer. No downloads and no sign-up.</p>
+</section>
+
+<section aria-labelledby="games-heading">
+  <h2 id="games-heading">Play now</h2>
+  <div class="card-grid">
+    {% for game in games %}
+    <article class="card">
+      <div class="card-art" aria-hidden="true">{{ game.title|slice:":1" }}</div>
+      <h3>{{ game.title }}</h3>
+      <p>{{ game.description }}</p>
+      <a class="btn" href="{% url 'games:play' game.slug %}">Play {{ game.title }}</a>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

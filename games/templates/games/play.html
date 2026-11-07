@@ -1,0 +1,16 @@
+{% extends "games/base.html" %}
+{% load static %}
+
+{% block title %}{{ game.title }} | Mini Game Arcade{% endblock %}
+
+{% block content %}
+<section class="play-header">
+  <h1>{{ game.title }}</h1>
+  <p class="controls"><strong>Controls:</strong> {{ game.controls }}</p>
+</section>
+
+<div id="game-container" class="game-area"></div>
+<script src="{% static 'games/js/fruit-slicer.js' %}"></script>
+
+<p><a href="{% url 'games:home' %}">&larr; Back to all games</a></p>
+{% endblock %}
